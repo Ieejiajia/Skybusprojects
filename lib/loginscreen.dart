@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return AlertDialog(
           title: new Text("Forgot Password?"),
           content: new Container(
-            height: 100,
+            height: 95,
             child: Column(
               children: <Widget>[
                 Text(

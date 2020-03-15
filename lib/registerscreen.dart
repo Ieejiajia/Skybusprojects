@@ -21,6 +21,8 @@ final GlobalKey<FormState> _key = new GlobalKey();
   String email;
   String mobile;
   String password;
+   String verify;
+  
   bool isPasswordVisible = false;
   bool _isChecked = false;
  double screenHeight;
@@ -94,7 +96,7 @@ final GlobalKey<FormState> _key = new GlobalKey();
             icon: Icon(Icons.smartphone)),
             controller: _phoneditingController,
             keyboardType: TextInputType.phone,
-            maxLength: 11,
+            maxLength: 10,
             validator: validateMobile,
             onSaved: (String val) {
               mobile = val;
@@ -193,6 +195,7 @@ Row(
     String email = _emailEditingController.text;
     String mobile = _phoneditingController.text;
     String password = _passEditingController.text;
+    String verify ='0';
  if (!_isChecked) {
  Toast.show("Please Accept Term", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -203,7 +206,7 @@ Row(
       "email": email,
        "phone":mobile,
        "password": password,
-     
+        "verify": verify,
     }).then((res) {
           print(res.statusCode);
          if (res.body == "success") {
@@ -227,8 +230,45 @@ Row(
 
 
  void _loginScreen() {
-    Navigator.pushReplacement(context,
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Confirm Navigation"),
+          content: new Container(
+            height:95,
+            
+            child: Column(
+              children: <Widget>[
+                Text("You have started register an account.\nLeaving this page will lose your changes.\n\nAre you sure to leave it ?" ),
+                
+              
+              ],
+            ),
+          ),
+        
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Leave this page"),
+              onPressed: () {
+                Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => LoginScreen()));
+              },
+            ),
+            new FlatButton(
+              child: new Text("Stay on this page"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+   
   }
 void _onChange(bool value) {
     setState(() {
@@ -263,7 +303,7 @@ void _onChange(bool value) {
                               fontSize: 12.0,
                             ),
                             text:
-                                "This End-User License Agreement (EULA) is a legal agreement between you and skyBusThis EULA agreement governs your acquisition and use of our skyBus software (Software) directly from skyBus or indirectly through a skyBus authorized reseller or distributor (a Reseller).Please read this EULA agreement carefully before completing the installation process and using the skyBus software. It provides a license to use the skyBus software and contains warranty information and liability disclaimers.If you register for a free trial of the skyBus software this EULA agreement will also govern that trial. By clicking accept or installing and/or using the skyBus software you are confirming your acceptance of the Software and agreeing to become bound by the terms of this EULA agreement.If you are entering into this EULA agreement on behalf of a company or other legal entity you represent that you have the authority to bind such entity and its affiliates to these terms and conditions. If you do not have such authority or if you do not agree with the terms and conditions of this EULA agreement do not install or use the Software and you must not accept this EULA agreement.This EULA agreement shall apply only to the Software supplied by skyBus herewith regardless of whether other software is referred to or described herein. The terms also apply to any skyBus updates supplements Internet-based services and support services for the Software unless other terms accompany those items on delivery. If so those terms apply. This EULA was created by EULA Template for skyBus.License Grant skyBus hereby grants you a personal non-transferable non-exclusive licence to use the skyBus software on your devices in accordance with the terms of this EULA agreement.You are permitted to load the skyBus software (for example a PC laptop mobile or tablet) under your control. You are responsible for ensuring your device meets the minimum requirements of the skyBus software.You are not permitted to Edit alter modify adapt translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software nor decompile disassemble or reverse engineer the Software or attempt to do any such things Reproduce copy distribute resell or otherwise use the Software for any commercial purposeAllow any third party to use the Software on behalf of or for the benefit of any third partyUse the Software in any way which breaches any applicable local national or international lawuse the Software for any purpose that skyBus considers is a breach of this EULA agreement Intellectual Property and OwnershipskyBus shall at all times retain ownership of the Software as originally downloaded by you and all subsequent downloads of the Software by you. The Software (and the copyright and other intellectual property rights of whatever nature in the Software including any modifications made thereto) are and shall remain the property of skyBus.skyBus reserves the right to grant licences to use the Software to third parties."
+                                "This End-User License Agreement (EULA) is a legal agreement between you and skyBus\n\nThis EULA agreement governs your acquisition and use of our skyBus software (Software) directly from skyBus or indirectly through a skyBus authorized reseller or distributor (a Reseller).\n\nPlease read this EULA agreement carefully before completing the installation process and using the skyBus software. It provides a license to use the skyBus software and contains warranty information and liability disclaimers.\n\nIf you register for a free trial of the skyBus software this EULA agreement will also govern that trial. By clicking accept or installing and/or using the skyBus software you are confirming your acceptance of the Software and agreeing to become bound by the terms of this EULA agreement.\n\nIf you are entering into this EULA agreement on behalf of a company or other legal entity you represent that you have the authority to bind such entity and its affiliates to these terms and conditions. If you do not have such authority or if you do not agree with the terms and conditions of this EULA agreement do not install or use the Software and you must not accept this EULA agreement.\nThis EULA agreement shall apply only to the Software supplied by skyBus herewith regardless of whether other software is referred to or described herein. The terms also apply to any skyBus updates supplements Internet-based services and support services for the Software unless other terms accompany those items on delivery. If so those terms apply.This EULA was created by EULA Template for skyBus.\n\nLicense Grant\n\nskyBus hereby grants you a personal non-transferable non-exclusive licence to use the skyBus software on your devices in accordance with the terms of this EULA agreement.\nYou are permitted to load the skyBus software (for example a PC laptop mobile or tablet) under your control. You are responsible for ensuring your device meets the minimum requirements of the skyBus software.\nYou are not permitted to\n Edit alter modify adapt translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software nor decompile disassemble or reverse engineer the Software or attempt to do any such things\nReproduce copy distribute resell or otherwise use the Software for any commercial purpose\nAllow any third party to use the Software on behalf of or for the benefit of any third partyUs\ne the Software in any way which breaches any applicable local national or international law\nuse the Software for any purpose that skyBus considers is a breach of this EULA agreement\n\nIntellectual Property and Ownership\n\nskyBus shall at all times retain ownership of the Software as originally downloaded by you and all subsequent downloads of the Software by you. The Software (and the copyright and other intellectual property rights of whatever nature in the Software including any modifications made thereto) are and shall remain the property of skyBus.\nskyBus reserves the right to grant licences to use the Software to third parties."
                             //children: getSpan(),
                             )),
                   ),
@@ -311,10 +351,10 @@ String validateEmail(String value) {
   String validateMobile(String value) {
     String patttern = r'(^[0-9]*$)';
     RegExp regExp = new RegExp(patttern);
-    if (value.length !=10 || value.length !=11 ) {
-      return "Mobile number must 10 or 11 digits";
-    } else if(value.length == 0 ){
+    if (value.length == 0) {
       return "Mobile is Required";
+    } else if(value.length !=10  ){
+      return "Mobile number must 10 digits";
     }else if  (!regExp.hasMatch(value)) {
       return "Mobile Number must be digits";
     }
