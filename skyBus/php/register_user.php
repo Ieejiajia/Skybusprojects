@@ -5,9 +5,8 @@ $name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
 $password = sha1($_POST['password']);
-$verify= $_POST['verify'];
 
-$sqlinsert = "INSERT INTO USER(NAME,EMAIL,PASSWORD,PHONE,VERIFY) VALUES ('$name','$email','$password','$phone','$verify')";
+$sqlinsert = "INSERT INTO USER(NAME,EMAIL,PASSWORD,PHONE,VERIFY) VALUES ('$name','$email','$password','$phone','0')";
 
 if ($conn->query($sqlinsert) === true)
 {
@@ -29,7 +28,7 @@ function sendEmail($useremail) {
     $headers = 'From: noreply@skyBus.com' . "\r\n" . 
     'Reply-To: '.$useremail . "\r\n" . 
     'X-Mailer: PHP/' . phpversion(); 
-    mail($to, $subject, $message,$message, $headers); 
+    mail($to, $subject, $message, $headers); 
 }
 
 ?>

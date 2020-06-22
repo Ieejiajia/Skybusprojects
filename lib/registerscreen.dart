@@ -21,7 +21,7 @@ final GlobalKey<FormState> _key = new GlobalKey();
   String email;
   String mobile;
   String password;
-   String verify;
+     
   
   bool isPasswordVisible = false;
   bool _isChecked = false;
@@ -195,7 +195,7 @@ Row(
     String email = _emailEditingController.text;
     String mobile = _phoneditingController.text;
     String password = _passEditingController.text;
-    String verify ='0';
+
  if (!_isChecked) {
  Toast.show("Please Accept Term", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -206,7 +206,7 @@ Row(
       "email": email,
        "phone":mobile,
        "password": password,
-        "verify": verify,
+        
     }).then((res) {
           print(res.statusCode);
          if (res.body == "success") {
