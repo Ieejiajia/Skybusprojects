@@ -711,7 +711,7 @@ void _updatePayment() {
     
        if (_storeCredit) {
         amountpayable =
-            insurancecharge + _totalprice - double.parse(widget.user.credit);
+             double.parse(widget.user.credit)-(insurancecharge + _totalprice) ;
       }
       else  {
         amountpayable = insurancecharge + _totalprice;

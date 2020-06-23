@@ -12,7 +12,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:cached_network_image/cached_network_image.dart';
 import 'cartscreen.dart';
 import 'paymenthistory.dart';
-//import 'profilescreen.dart';
+import 'profilescreen.dart';
 
 void main() => runApp(MainScreen());
 
@@ -427,7 +427,7 @@ class _MainScreenState extends State<MainScreen> {
                   }
           ),
           ListTile(
-            title: Text("Purchased History"),
+            title: Text("My Bookings"),
             trailing: Icon(Icons.arrow_forward),
              onTap: () => {
                     Navigator.pop(context),
@@ -448,8 +448,8 @@ class _MainScreenState extends State<MainScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) =>null, //ProfileScreen(
-                                  //user: widget.user,)
+                            builder: (BuildContext context) => ProfileScreen(
+                                  user: widget.user,)
                                 ))
                   }),  ],
       ),

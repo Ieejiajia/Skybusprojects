@@ -39,12 +39,12 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment History'),
+        title: Text('My Bookings'),
          actions: <Widget>[
           IconButton(
             icon: Icon(MdiIcons.deleteEmpty),
             onPressed: () {
-              deleteAll();
+             
             },
           ),
         ]),
@@ -153,59 +153,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
       print(err);
     });
   }
-   void deleteAll() {
-     showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        title: new Text(
-          'Delete all items?',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        actions: <Widget>[
-          MaterialButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-                http.post("https://smileylion.com/skyBus/php/delete_paymenthistory.php",
-                    body: {
-                      "email": widget.user.email,
-                    }).then((res) {
-                  print(res.body);
-
-                  if (res.body == "success") {
-                    _loadPaymentHistory();
-                  } else {
-                    Toast.show("Failed", context,
-                        duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                  }
-                }).catchError((err) {
-                  print(err);
-                });
-              },
-              child: Text(
-                "Yes",
-                style: TextStyle(
-                  color: Color.fromRGBO(101, 255, 218, 50),
-                ),
-              )),
-          MaterialButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: Text(
-                "Cancel",
-                style: TextStyle(
-                  color: Color.fromRGBO(101, 255, 218, 50),
-                ),
-              )),
-        ],
-      ),
-    );
-
-  }
+  
 
  loadOrderDetails(int index) {
     Order order = new Order(

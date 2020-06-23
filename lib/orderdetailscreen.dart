@@ -31,7 +31,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details'),
+        title: Text('Ticket Details'),
       ),
       body: Center(
         child: Column(children: <Widget>[
