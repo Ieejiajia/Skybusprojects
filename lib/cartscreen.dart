@@ -353,7 +353,7 @@ bool _noninsurance = true;
                                     color: Color.fromRGBO(101, 255, 218, 50),
                                     textColor: Colors.black,
                                     elevation: 10,
-                                    onPressed: makePayment,
+                                    onPressed: makePaymentDialog,
                                   ),
                                 ],
                               ),
@@ -384,7 +384,7 @@ bool _noninsurance = true;
                                         )
                                         ),
                                         SizedBox(height:10 ,),
-                                        Text(cartData[index]['id'].toString(),
+                                        Text( "RM" +cartData[index]['price'].toString(),
                                        style: TextStyle(
                                            fontWeight:FontWeight.bold ,
                                           color: Colors.black,
@@ -711,7 +711,7 @@ void _updatePayment() {
     
        if (_storeCredit) {
         amountpayable =
-             double.parse(widget.user.credit)-(insurancecharge + _totalprice) ;
+             (insurancecharge + _totalprice)-double.parse(widget.user.credit) ;
       }
       else  {
         amountpayable = insurancecharge + _totalprice;
@@ -722,7 +722,58 @@ void _updatePayment() {
       print(_totalprice);
     });
   }
+   void makePaymentDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+        title: new Text(
+          'Proceed with payment?',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        content: new Text(
+          'Are you sure?',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        actions: <Widget>[
+          MaterialButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+                makePayment();
+              },
+              child: Text(
+                "Ok",
+                style: TextStyle(
+                  color: Color.fromRGBO(101, 255, 218, 50),
+                ),
+              )),
+          MaterialButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text(
+                "Cancel",
+                style: TextStyle(
+                  color: Color.fromRGBO(101, 255, 218, 50),
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+  
       Future<void> makePayment() async {
+        if (amountpayable < 0) {
+      double newamount = amountpayable * -1;
+      await _payusingstorecredit(newamount);
+      _loadCart();
+      return;
+    }
     if (_noninsurance) {
       print("no insurance");
       Toast.show("no insurance", context,
@@ -752,6 +803,16 @@ void _updatePayment() {
                 )));
     _loadCart();
   }
+   String generateOrderid() {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('ddMMyyyy-');
+    String orderid = widget.user.email.substring(1, 4) +
+        "-" +
+        formatter.format(now) +
+        randomAlphaNumeric(6);
+    return orderid;
+  }
+
  void deleteAll() {
      showDialog(
       context: context,
@@ -805,6 +866,28 @@ void _updatePayment() {
     );
 
   }
-
+ Future<void> _payusingstorecredit(double newamount) async {
+    //insert carthistory
+    //remove cart content
+    //update product quantity
+    //update credit in user
+    ProgressDialog pr = new ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: true);
+    pr.style(message: "Updating cart...");
+    pr.show();
+    String urlPayment = "https://smileylion.com/skyBus/php/paymentsc.php";
+    await http.post(urlPayment, body: {
+      "userid": widget.user.email,
+      "amount": _totalprice.toStringAsFixed(2),
+      "orderid": generateOrderid(),
+      "newcr": newamount.toStringAsFixed(2)
+    }).then((res) {
+      print(res.body);
+      pr.dismiss();
+    }).catchError((err) {
+      print(err);
+    });
+  }
+  
 }
 
