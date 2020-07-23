@@ -52,7 +52,7 @@ class _AdminTicketsState extends State<AdminTickets> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Manage Your Products',
+          'Manage Your Tickets',
           style: TextStyle(
             color: Colors.white,
           ),
@@ -318,17 +318,17 @@ class _AdminTicketsState extends State<AdminTickets> {
         children: [
           SpeedDialChild(
               child: Icon(Icons.new_releases),
-              label: "New Product",
+              label: "New Ticket",
               labelBackgroundColor: Colors.white,
               onTap: createNewProduct),
           SpeedDialChild(
               child: Icon(MdiIcons.barcodeScan),
-              label: "Scan Product",
+              label: "Scan Ticket",
               labelBackgroundColor: Colors.white, //_changeLocality()
               onTap: () => scanProductDialog()),
           SpeedDialChild(
               child: Icon(Icons.report),
-              label: "Product Report",
+              label: "Report",
               labelBackgroundColor: Colors.white, //_changeLocality()
               onTap: () => null),
         ],
@@ -605,7 +605,7 @@ class _AdminTicketsState extends State<AdminTickets> {
               onTap: () =>
                   {Navigator.of(context).pop(), _onProductDetail(index)},
               child: Text(
-                "Update Product?",
+                "Update Ticket?",
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -616,7 +616,7 @@ class _AdminTicketsState extends State<AdminTickets> {
               onTap: () =>
                   {Navigator.of(context).pop(), _deleteProductDialog(index)},
               child: Text(
-                "Delete Product?",
+                "Delete Ticket?",
                 style: TextStyle(color: Colors.black),
               )),
         ),
@@ -638,7 +638,7 @@ class _AdminTicketsState extends State<AdminTickets> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           title: new Text(
-            "Delete Product Id " + busdata[index]['id'],
+            "Delete Bus Id " + busdata[index]['id'],
             style: TextStyle(
               color: Colors.black,
             ),
