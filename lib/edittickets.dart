@@ -222,6 +222,7 @@ class _EditTicketsState extends State<EditTickets> {
                                             keyboardType: TextInputType.text,
                                             textInputAction:
                                                 TextInputAction.next,
+                                                
                                             onFieldSubmitted: (v) {
                                               FocusScope.of(context)
                                                   .requestFocus(focus0);
