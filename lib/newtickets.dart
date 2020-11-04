@@ -33,6 +33,8 @@ class _NewTicketsState extends State<NewTickets> {
   final focus1 = FocusNode();
   final focus2 = FocusNode();
   final focus3 = FocusNode();
+   final focus4 = FocusNode();
+ final focus5 = FocusNode();
    String selectedCompany;
   List<String> listCompany = [
     "S&S Express",
@@ -56,7 +58,7 @@ class _NewTicketsState extends State<NewTickets> {
               children: <Widget>[
                 SizedBox(height: 6),
                 GestureDetector(
-                    onTap: () => {_choose()},
+                   onTap: () => {_choose()},
                     child: Container(
                       height: screenHeight / 3,
                       width: screenWidth / 1.8,
@@ -186,9 +188,10 @@ class _NewTicketsState extends State<NewTickets> {
                                             keyboardType: TextInputType.text,
                                             textInputAction:
                                                 TextInputAction.next,
+                                                focusNode:focus0 ,
                                             onFieldSubmitted: (v) {
                                               FocusScope.of(context)
-                                                  .requestFocus(focus0);
+                                                  .requestFocus(focus1);
                                             },
                                             decoration: new InputDecoration(
                                               contentPadding:
@@ -229,9 +232,10 @@ class _NewTicketsState extends State<NewTickets> {
                                             keyboardType: TextInputType.text,
                                             textInputAction:
                                                 TextInputAction.next,
+                                                focusNode: focus1,
                                             onFieldSubmitted: (v) {
                                               FocusScope.of(context)
-                                                  .requestFocus(focus0);
+                                                  .requestFocus(focus2);
                                             },
                                             decoration: new InputDecoration(
                                               contentPadding:
@@ -249,11 +253,11 @@ class _NewTicketsState extends State<NewTickets> {
                                       ),
                                     ),
                                   ]),
-                                  TableRow(children: [
-                                    TableCell(
-                                      child: Container(
-                                          alignment: Alignment.centerLeft,
-                                          height: 30,
+                                TableRow(children: [
+                                  TableCell(
+                                     child: Container(
+                                        alignment: Alignment.centerLeft,
+                                         height: 30,
                                           child: Text("Arrival Time",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -270,11 +274,12 @@ class _NewTicketsState extends State<NewTickets> {
                                             ),
                                             controller: arrvtimeEditingController,
                                             keyboardType: TextInputType.text,
+                                         
                                             textInputAction:
-                                                TextInputAction.next,
+                                                TextInputAction.next,focusNode: focus2,
                                             onFieldSubmitted: (v) {
                                               FocusScope.of(context)
-                                                  .requestFocus(focus0);
+                                                  .requestFocus(focus3);
                                             },
                                             decoration: new InputDecoration(
                                               contentPadding:
@@ -314,10 +319,10 @@ class _NewTicketsState extends State<NewTickets> {
                                             keyboardType: TextInputType.number,
                                             textInputAction:
                                                 TextInputAction.next,
-                                            focusNode: focus0,
+                                            focusNode: focus3,
                                             onFieldSubmitted: (v) {
                                               FocusScope.of(context)
-                                                  .requestFocus(focus1);
+                                                  .requestFocus(focus4);
                                             },
                                             decoration: new InputDecoration(
                                               fillColor: Colors.black,
@@ -354,10 +359,10 @@ class _NewTicketsState extends State<NewTickets> {
                                             keyboardType: TextInputType.number,
                                             textInputAction:
                                                 TextInputAction.next,
-                                            focusNode: focus1,
+                                            focusNode: focus4,
                                             onFieldSubmitted: (v) {
                                               FocusScope.of(context)
-                                                  .requestFocus(focus2);
+                                                  .requestFocus(focus5);
                                             },
                                             decoration: new InputDecoration(
                                               fillColor: Colors.black,
@@ -442,16 +447,16 @@ class _NewTicketsState extends State<NewTickets> {
     );
   }
 
-  void _choose() async {
-    _image = await ImagePicker.pickImage(
-        source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
-    _cropImage();
-    setState(() {});
-  }
+void _choose() async {
+  _image = await ImagePicker.pickImage(
+       source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
+_cropImage();
+   setState(() {});
+ }
 
   Future<Null> _cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
-        sourcePath: _image.path,
+       sourcePath: _image.path,
         aspectRatioPresets: Platform.isAndroid
             ? [
                 CropAspectRatioPreset.square,
@@ -459,7 +464,7 @@ class _NewTicketsState extends State<NewTickets> {
                 //CropAspectRatioPreset.original,
                 //CropAspectRatioPreset.ratio4x3,
                 //CropAspectRatioPreset.ratio16x9
-              ]
+            ]
             : [
                 //CropAspectRatioPreset.original,
                 CropAspectRatioPreset.square,
@@ -469,21 +474,21 @@ class _NewTicketsState extends State<NewTickets> {
                 //CropAspectRatioPreset.ratio5x4,
                 //CropAspectRatioPreset.ratio7x5,
                 //CropAspectRatioPreset.ratio16x9
-              ],
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Cropper',
+             ],
+       androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Cropper',
             toolbarColor: Colors.deepOrange,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
+       iosUiSettings: IOSUiSettings(
           title: 'Cropper',
         ));
     if (croppedFile != null) {
       _image = croppedFile;
-      setState(() {});
+     setState(() {});
     }
-  }
+ }
 
   void _onGetId() {
     scanBarcodeNormal();
@@ -538,14 +543,13 @@ class _NewTicketsState extends State<NewTickets> {
   void _insertNewSchedule() {
     if (_scanBarcode == "click here to scan") {
       Toast.show("Please scan product id", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      return;
+     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    return;
     }
-    if (_image == null) {
-      Toast.show("Please take product photo", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      return;
-    }
+    //if (_image == null) {
+     // Toast.show("Please take product photo", context,
+      //    duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    //}
      if (departEditingController.text.length < 4) {
       Toast.show("Please enter depature station", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -556,12 +560,12 @@ class _NewTicketsState extends State<NewTickets> {
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       return;
     }
-    if (departimeEditingController.text.length < 4) {
+    if (departimeEditingController.text.length < 1) {
       Toast.show("Please enter departure time", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       return;
     }
-    if (arrvtimeEditingController.text.length < 4) {
+    if (arrvtimeEditingController.text.length < 1) {
       Toast.show("Please enter arrival time", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       return;
@@ -586,7 +590,7 @@ class _NewTicketsState extends State<NewTickets> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           title: new Text(
-            "Insert New Bus Id " + departEditingController.text,
+            "Insert New Bus  " + departEditingController.text,
             style: TextStyle(
               color: Colors.black,
             ),
@@ -632,7 +636,7 @@ class _NewTicketsState extends State<NewTickets> {
         type: ProgressDialogType.Normal, isDismissible: false);
     pr.style(message: "Inserting new schedule...");
     pr.show();
-    String base64Image = base64Encode(_image.readAsBytesSync());
+   // String base64Image = base64Encode(_image.readAsBytesSync());
 
     http.post(server+"/php/insert_bus.php", body: {
       "id":_scanBarcode,
@@ -642,8 +646,8 @@ class _NewTicketsState extends State<NewTickets> {
       "arrvtime": arrvtimeEditingController.text,
       "quantity": qtyEditingController.text,
       "price": price.toStringAsFixed(2),
-      "company": companyEditingController.text,
-      "encoded_string": base64Image,
+      "company": selectedCompany,
+      //"encoded_string": base64Image,
     }).then((res) {
       print(res.body);
       pr.dismiss();
@@ -760,7 +764,7 @@ class _NewTicketsState extends State<NewTickets> {
               onPressed: () {
                 Navigator.of(context).pop();
                 setState(() {
-                  if (pridedtctrl.text.length > 5) {
+                  if (pridedtctrl.text.length > 2) {
                     _scanBarcode = pridedtctrl.text;
                   } else {}
                 });
